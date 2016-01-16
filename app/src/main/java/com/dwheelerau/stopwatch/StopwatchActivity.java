@@ -8,8 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.app.Activity;
+import android.widget.TextView;
 
 public class StopwatchActivity extends AppCompatActivity {
+
+    //variables that hold time
+    private int seconds = 0;
+    private boolean running;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,36 @@ public class StopwatchActivity extends AppCompatActivity {
         });
     }
 
+    //start the stopwatch running when the start button is pushed
+    public void onClickStart(View view){
+        running = true;
+    }
+
+    //stop the stopwatch when the stop button is clicked
+    public void onClickStop(View view){
+        running = false;
+    }
+
+    //reset the time
+    public void onClickReset(View view) {
+        running = false;
+        seconds = 0;
+    }
+
+    //time
+    public void runTimer(){
+        final TextView timeView = (TextView) findViewById(R.id.time_view);
+        //padder
+        int hours = seconds/3600;
+        int minutes = (seconds%3600/60);
+        int secs = seconds%60;
+        String time = String.format("%d:%02d:%02d", hours, minutes, secs);
+        timeView.setText(time);
+        if (running){
+            seconds++;
+        }
+        //padder
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
